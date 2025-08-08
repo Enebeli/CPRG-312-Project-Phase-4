@@ -8,11 +8,14 @@ commentRouter.use(validateJWT);
 
 commentRouter.post("/", async (req, res) => {
 
+    console.log(`*** POST COMMENT - START ***`);
     const user = req.user;
 
     const {username, commenttxt} = req.body;
 
     if(user.username != username) {
+        console.log(`token mismatch`);
+        console.log(`*** POST COMMENT - END ***`);
         return res.status(401).json({message:"token mismatch"});
     }
 
@@ -31,10 +34,12 @@ commentRouter.post("/", async (req, res) => {
                 text: commenttxt
             }
         })
+        console.log(`*** POST COMMENT - END ***`);
     } catch(error) {
         console.error(`Error while saving comment`);
         console.error(error);
         res.status(500).json({message: "Internal server error"});
+        console.log(`*** POST COMMENT - END ***`);
     }
     
 
@@ -42,6 +47,7 @@ commentRouter.post("/", async (req, res) => {
 
 commentRouter.get("/", async (req,res) => {
 
+    console.log(`*** FIND ALL COMMENTS - START ***`);
     try {
 
         const comments = await Comment.find({});
@@ -49,12 +55,14 @@ commentRouter.get("/", async (req,res) => {
         res.status(200).json({
             comment_list: comments,
         })
+        console.log(`*** FIND ALL COMMENTS - END ***`);
 
     } catch(error) {
         console.error(`error while getting comments`);
         console.error(error);
 
         res.status(500).json({message: "internal server error"});
+        console.log(`*** FIND ALL COMMENTS - END ***`);
     }
 });
 
