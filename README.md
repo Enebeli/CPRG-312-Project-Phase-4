@@ -48,7 +48,7 @@ Secure authentication with JWT
 
 Security Testing
 
-I conducted both manual and automated security testing using OWASP ZAP and npm audit. The following outlines what was tested and observed:
+I conducted both manual and automated security testing using OWASP ZAP (report included) and npm audit. The following outlines what was tested and observed:
 
 SQL Injection – MongoDB is not vulnerable to SQL injection, and no issues were found.
 
