@@ -3,6 +3,17 @@ import { useLoggedInUserContext } from "../context/LoggedInUserContext";
 import CommentComposer from "./CommentComposer";
 import './Comment.css';
 
+function escapeHTML(str) {
+    if (!str) return '';
+    return str
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#039;");
+  }
+  
+
 const Comments = () => {
     const user = useLoggedInUserContext().loggedInUser;
     const [refreshCount, setRefreshCount] = useState(0);
@@ -38,11 +49,12 @@ const Comments = () => {
     return (
         <section id="comment-section">
             {comments.map(comment => 
-                <div className="comment-container" key={comment._id}>
-                    <p className="usr txt">{comment.user}</p>
-                    <p className="cmt txt">{comment.text}</p>
-                </div>
-            )}
+  <div className="comment-container" key={comment._id}>
+    <p className="usr txt">{escapeHTML(comment.user)}</p>
+    <p className="cmt txt">{escapeHTML(comment.text)}</p>
+  </div>
+)}
+
             <CommentComposer refresh={refreshCount} update={setRefreshCount} />
         </section>
     );
